@@ -1,0 +1,22 @@
+{
+  "connection": "default",
+  "collectionName": "cuisines",
+  "info": {
+    "name": "cuisine",
+    "description": "types of cuisine that could be associated with a restaurant"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "CuisineType": {
+      "type": "string"
+    },
+    "restaurants": {
+      "collection": "restaurant",
+      "via": "cuisine"
+    }
+  }
+}

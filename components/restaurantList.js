@@ -1,6 +1,6 @@
-import {gql,useQuery} from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import Dishes from "./dishes"
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 
 
 import AppContext from "./context"
@@ -13,11 +13,12 @@ import {
   CardTitle,
   Container,
   Row,
-  Col} from "reactstrap";
+  Col
+} from "reactstrap";
 
-function RestaurantList(props){
-  const[restaurantID, setRestaurantID] = useState(0)
-  const {cart } = useContext(AppContext);
+function RestaurantList(props) {
+  const [restaurantID, setRestaurantID] = useState(0)
+  const { cart } = useContext(AppContext);
   const [state, setState] = useState(cart)
   const GET_RESTAURANTS = gql`
     query {
@@ -25,6 +26,8 @@ function RestaurantList(props){
         id
         name
         description
+        Minutes
+        cuisine { CuisineType }
         image {
           url
         }
@@ -38,55 +41,57 @@ function RestaurantList(props){
   console.log(`Query Data: ${data.restaurants}`)
 
 
-let searchQuery = data.restaurants.filter((res) =>{
+  let searchQuery = data.restaurants.filter((res) => {
     return res.name.toLowerCase().includes(props.search)
-  })
+  }) || [];
 
-let restId = searchQuery[0].id
- 
-// definet renderer for Dishes
+  let restId = searchQuery[0] ? searchQuery[0].id : null;
+
+  // definet renderer for Dishes
   const renderDishes = (restaurantID) => {
     return (<Dishes restId={restaurantID}> </Dishes>)
   };
-if(searchQuery.length > 0){
-  const restList = searchQuery.map((res) => (
-    <Col xs="6" sm="4" key={res.id}>
-      <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
-        <CardImg
-          top={true}
-          style={{ height: 200 }}
-          src={
-          `http://localhost:1337`+ res.image.url
-          }
-        />
-        <CardBody>
-          <CardText>{res.description}</CardText>
-        </CardBody>
-        <div className="card-footer">
-        
-        <Button color="info" onClick={()=> setRestaurantID(res.id)}>{res.name}</Button>
-         
-        </div>
-      </Card>
-    </Col>
-  ))
+  if (searchQuery.length > 0) {
+    const restList = searchQuery.map((res) => (
+      <Col xs="6" sm="4" key={res.id}>
+        <Card style={{ margin: "0 0.5rem 20px 0.5rem" }}>
+          <CardImg
+            top={true}
+            style={{ height: 200 }}
+            src={
+              `http://localhost:1337` + res.image.url
+            }
+          />
+          <CardBody>
+            <CardText>{res.description}</CardText>
+            <CardText>{res.Minutes} minutes away</CardText>
+            <CardText>Type of cuisine: {res.cuisine.CuisineType}</CardText>
+          </CardBody>
+          <div className="card-footer">
 
-  return(
+            <Button color="info" onClick={() => setRestaurantID(res.id)}>{res.name}</Button>
 
-    <Container>
-    <Row xs='3'>
-      {restList}
-    </Row>
-  
-    <Row xs='3'>
-    {renderDishes(restaurantID)}
-    </Row>
- 
-    </Container>
- 
-  )
-} else {
-  return <h1> No Restaurants Found</h1>
+          </div>
+        </Card>
+      </Col>
+    ))
+
+    return (
+
+      <Container>
+        <Row xs='3'>
+          {restList}
+        </Row>
+
+        <Row xs='3'>
+          {renderDishes(restaurantID)}
+        </Row>
+
+      </Container>
+
+    )
+  } else {
+    return <h1> No Restaurants Found</h1>
+  }
 }
-}
-   export default RestaurantList
+export default RestaurantList

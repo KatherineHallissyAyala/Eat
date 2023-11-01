@@ -28,6 +28,13 @@
     "dishes": {
       "collection": "dish",
       "via": "restaurant"
+    },
+    "Minutes": {
+      "type": "integer"
+    },
+    "cuisine": {
+      "model": "cuisine",
+      "via": "restaurants"
     }
   }
 }
