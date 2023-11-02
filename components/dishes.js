@@ -1,6 +1,7 @@
 import {useRouter} from "next/router"
 import {gql,useQuery} from '@apollo/client';
 import {useState, useContext} from 'react'
+//import { centsToDollars } from "../utils/centsToDollars";
 import AppContext from "./context"
 import {
   Button,
@@ -60,6 +61,7 @@ const GET_RESTAURANT_DISHES = gql`
                 <CardBody>
                   <CardTitle>{res.name}</CardTitle>
                   <CardText>{res.description}</CardText>
+                  <CardText>${res.price}.00</CardText>
                 </CardBody>
                 <div className="card-footer">
                   <Button color="info"
