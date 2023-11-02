@@ -7,8 +7,13 @@ import { Container, Nav, NavItem } from "reactstrap";
 import AppContext from "./context";
 
 const Layout = (props) => {
-const title = "Welcome to Nextjs";
+const title = "Let's Get Take Out";
 const {user} = useContext(AppContext);
+
+const appContext = useContext(AppContext);
+console.log(`Katherine Q: ${appContext.user}`);
+
+
   return (
     <div>
       <Head>
@@ -57,10 +62,10 @@ const {user} = useContext(AppContext);
                   className="nav-link"
                   onClick={() => {
                     logout();
-                    setUser(null);
+                    appContext.user = null;
                   }}
                 >
-                  Logout
+                  Log out
                 </a>
               </Link>
             ) : (

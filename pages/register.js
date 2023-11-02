@@ -17,6 +17,7 @@ import AppContext from "../components/context";
 
 const Register = () => {
   const [data, setData] = useState({ email: "", username: "", password: "" });
+  const {user, setUser} = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
   const appContext = useContext(AppContext);
@@ -83,8 +84,8 @@ const Register = () => {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <span>
-                      <a href="">
+                      <span>
+                        <a href="">
                         <small>Forgot Password?</small>
                       </a>
                     </span>
@@ -97,7 +98,12 @@ const Register = () => {
                         registerUser(data.username, data.email, data.password)
                           .then((res) => {
                             // set authed user in global context object
-                            appContext.setUser(res.data.user);
+                            setUser({ username:data.username, email:data.email, password:data.password });
+                            appContext.user = { username:data.username, email:data.email, password:data.password };
+                            console.log('User token', res.data.user);
+                            console.log(appContext.user);
+                            console.log(AppContext.user);
+                            console.log(AppContext);
                             setLoading(false);
                             console.log(`registered user: ${JSON.stringify(res.data)}`)
                           })
