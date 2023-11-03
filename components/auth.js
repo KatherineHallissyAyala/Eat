@@ -95,3 +95,5 @@ export const withAuthSync = (Component) => {
 
   return Wrapper;
 };
+
+export default logout;

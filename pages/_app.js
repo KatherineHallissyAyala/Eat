@@ -10,6 +10,7 @@ function MyApp(props){
   var {cart,addItem,removeItem} = useContext(AppContext)
   const [state,setState] = useState({cart:cart});
   const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { Component, pageProps } = props;
   
   //setUser = (user) => {
@@ -83,7 +84,7 @@ function MyApp(props){
   }
 
   return (
-    <AppContext.Provider value={{cart: state.cart, addItem: addItem, removeItem: removeItem,isAuthenticated:false, user, setUser}}>
+    <AppContext.Provider value={{cart: state.cart, addItem: addItem, removeItem: removeItem,isAuthenticated, user, setUser}}>
       <Head>
         <link
           rel="stylesheet"

@@ -21,6 +21,8 @@ function Login(props) {
   const [error, setError] = useState(false);
   const router = useRouter();
   const appContext = useContext(AppContext);
+  const {user, setUser} = useContext(AppContext);
+
 
   useEffect(() => {
     if (appContext.isAuthenticated) {
@@ -91,6 +93,7 @@ function Login(props) {
                             setLoading(false);
                             // set authed User in global context to update header/app state
                             appContext.setUser(res.data.user);
+                            appContext.isAuthenticated = true;
                           })
                           .catch((error) => {
                             //setError(error.response.data);

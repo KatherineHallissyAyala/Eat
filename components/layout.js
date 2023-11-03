@@ -5,10 +5,11 @@ import Head from "next/head";
 import Link from "next/link";
 import { Container, Nav, NavItem } from "reactstrap";
 import AppContext from "./context";
+import logout from "./auth";
 
 const Layout = (props) => {
 const title = "Let's Get Take Out";
-const {user} = useContext(AppContext);
+const {user, isAuthenticated} = useContext(AppContext);
 
 const appContext = useContext(AppContext);
 console.log(`Katherine Q: ${appContext.user}`);
@@ -63,6 +64,7 @@ console.log(`Katherine Q: ${appContext.user}`);
                   onClick={() => {
                     logout();
                     appContext.user = null;
+                    //isAuthenticated = false;
                   }}
                 >
                   Log out
